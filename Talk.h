@@ -5,6 +5,7 @@
 class Talk{
 public:
   void greeting();
+  void exclamation(std::string);
 };
 
 

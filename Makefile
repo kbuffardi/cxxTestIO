@@ -1,16 +1,14 @@
-all: run_tests app
+CXX = g++
 
-# Rules to build your targets
-app:
-	g++ -o talker main.cpp Talk.cpp
+all: run_tests
 
 # A rule that runs the unit tests
 run_tests: runner
 	./runner
 
 # Build the test runner
-runner: runner.cpp
-	$(CXX) -o $@ $<
+runner: runner.cpp Talk.cpp IOCapture.cpp
+	$(CXX) -o $@ $^
 
 # Generate the test runner
 runner.cpp: IOTest.h
