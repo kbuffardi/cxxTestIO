@@ -9,11 +9,11 @@ class IOCapture
 private:
   std::stringstream cout_stream;
   std::streambuf *buffer;
+  void startCapture();
+  void stopCapture();
 public:
   IOCapture();
   ~IOCapture();
-  void startCapture();
-  void stopCapture();
   std::string output();
   std::string outputFlush();
 };
