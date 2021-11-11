@@ -9,6 +9,9 @@ class IOCapture
 private:
   std::stringstream m_capture;
   std::streambuf *cout_buffer;
+  std::streambuf *cin_buffer;
+  std::stringstream m_input;
+  void releaseCin();
   void startCapture();
   void stopCapture();
 public:
@@ -16,5 +19,6 @@ public:
   ~IOCapture();
   std::string output();
   std::string outputFlush();
+  void inputFeed(std::string);
 };
 #endif

@@ -5,9 +5,22 @@ IOCapture::IOCapture(){
   startCapture();
 }
 
-// Destructor stops the cout capture
+// Destructor stops the cout and cin capture
 IOCapture::~IOCapture(){
   stopCapture();
+  releaseCin();
+}
+
+// Stops the input feed so the cin returns to its normal behavior
+void IOCapture::releaseCin(){
+  std::cin.rdbuf( cin_buffer );
+}
+
+// Provides a string that will be used as a buffer for any input, in place out
+// user-provided cin or getline
+void IOCapture::inputFeed(std::string in){
+  m_input.str(in);
+  cin_buffer = std::cin.rdbuf( m_input.rdbuf() );
 }
 
 // Begins capture by redirecting the cout buffer to IOCapture private member

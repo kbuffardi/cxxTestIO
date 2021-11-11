@@ -54,4 +54,29 @@ public:
       script.exclamation("Second");
       TS_ASSERT_EQUALS(capture.output(),"First!Second!");
     }
+    void testSimpleInputFeed(){
+      IOCapture capture;
+      capture.inputFeed("test");
+      std::string input;
+      std::cin>>input;
+      TS_ASSERT_EQUALS(input,"test");
+    }
+    void testMultiTypeInputFeed(){
+      IOCapture capture;
+      capture.inputFeed("string\n10\nZ");
+      std::string first;
+      int second;
+      char third;
+      std::cin>>first>>second>>third;
+      TS_ASSERT_EQUALS(first,"string");
+      TS_ASSERT_EQUALS(second,10);
+      TS_ASSERT_EQUALS(third,'Z');
+    }
+    void testGetlineInputFeed(){
+      IOCapture capture;
+      capture.inputFeed("full name");
+      std::string input;
+      getline(std::cin,input);
+      TS_ASSERT_EQUALS(input,"full name");
+    }
 };
