@@ -7,7 +7,7 @@ run_tests: runner
 	./runner
 
 # Build the test runner
-runner: runner.cpp Talk.cpp IOCapture.cpp
+runner: runner.cpp Talk.cpp IOCapture.h
 	$(CXX) -o $@ $^
 
 # Generate the test runner

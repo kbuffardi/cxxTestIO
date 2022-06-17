@@ -11,14 +11,23 @@ private:
   std::streambuf *cout_buffer;
   std::streambuf *cin_buffer;
   std::stringstream m_input;
-  void releaseCin();
-  void startCapture();
-  void stopCapture();
+  void releaseCin(){std::cin.rdbuf( cin_buffer );}
+  void startCapture(){cout_buffer = std::cout.rdbuf(m_capture.rdbuf());}
+  void stopCapture(){std::cout.rdbuf( cout_buffer );}
 public:
-  IOCapture();
-  ~IOCapture();
-  std::string output();
-  std::string outputFlush();
-  void inputFeed(std::string);
+  IOCapture(){startCapture();}
+  ~IOCapture(){stopCapture();releaseCin();}
+  std::string output(){return m_capture.str();}
+  std::string outputFlush(){
+    std::string out = m_capture.str();
+    stopCapture();
+    std::cout << out << std::flush;
+    startCapture();
+    return out;
+  }
+  void inputFeed(std::string in){
+    m_input.str(in);
+    cin_buffer = std::cin.rdbuf( m_input.rdbuf() );
+  }
 };
 #endif
